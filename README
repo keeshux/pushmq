@@ -1,4 +1,4 @@
-PushMQ is an AJAX client for any message queue providing a REST interface for publish/subscribe.
+Comet cross-browser client for any RESTful message queue.
 
 Depends on jQuery - http://jquery.com/
 
