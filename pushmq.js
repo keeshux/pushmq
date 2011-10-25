@@ -105,6 +105,17 @@ PushMQ.prototype.subscribe = function(channel) {
 PushMQ.prototype._longPoll = function(channel, lastMod, etag) {
     var _this = this;
 
+    var headers = {
+        'Cache-Control': 'max-age=0',
+        'Connection': 'keep-alive'
+    };
+    if (lastMod) {
+        headers['If-Modified-Since'] = lastMod;
+    }
+    if (etag) {
+        headers['If-None-Match'] = etag;
+    }
+
     // subscriber REST service
     $.ajax({
         type: 'GET',
@@ -114,10 +125,7 @@ PushMQ.prototype._longPoll = function(channel, lastMod, etag) {
         timeout: this.settings.pollTimeout,
         cache: false, // IMPORTANT!
         ifModified: true, // IMPORTANT!
-        headers: {
-            'If-Modified-Since': lastMod,
-            'If-None-Match': etag
-        },
+        headers: headers,
         success: function(data, textStatus, xhr) {
 
             // only repoll if connected
@@ -186,3 +194,4 @@ PushMQ.prototype.close = function(channel, doDelete) {
         console.error('X  "%s"', channel);
     }
 };
+
