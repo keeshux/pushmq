@@ -106,8 +106,7 @@ PushMQ.prototype._longPoll = function(channel, lastMod, etag) {
     var _this = this;
 
     var headers = {
-        'Cache-Control': 'max-age=0',
-        'Connection': 'keep-alive'
+        'Cache-Control': 'max-age=0'
     };
     if (lastMod) {
         headers['If-Modified-Since'] = lastMod;
